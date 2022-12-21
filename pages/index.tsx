@@ -42,18 +42,21 @@ export default function Home() {
             />
           </div>
         </div>
+        <form onSubmit={fireAwayEmails}>
         <div className={"flex flex-row justify-center items-start mt-32"}>
-          <form onSubmit={fireAwayEmails}>
-          <div className='flex flex-col p-4'>
+          
+          <div className='flex flex-col p-1'>
             <p className='text-gray-300 font-semibold text-lg'>Email Address:</p>
             <input className='rounded-md h-10 w-96 bg-gray-600' value={email} onChange={(e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}></input>
           </div>
-          <div className='flex flex-col p-4'>
-            <p className='text-gray-300 font-semibold text-lg'>Number of Emails</p>
+          <div className='flex flex-col p-1'>
+            <p className='text-gray-300 font-semibold text-lg'>No. of Emails</p>
             <input className='rounded-md h-10 w-20 bg-gray-600' value={numberOfEmails} onChange={(e: ChangeEvent<HTMLInputElement>) => setNumberOfEmails(e.target.value)}></input>
           </div>
-          </form>
+          
         </div>
+        </form>
+        <input type="submit" value="Shoot" className='bg-blue-800 w-64 h-10 rounded-lg mt-5'></input>
       </main>
     </>
   )

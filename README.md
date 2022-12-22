@@ -2,9 +2,13 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
-First, run the development server:
+Run `cp .env.example .env`.
+Fill in the environment variables, namely SMTP server and the email from address.
+
+Run the development server:
 
 ```bash
+npm install
 npm run dev
 # or
 yarn dev

@@ -3,15 +3,24 @@ import Image from 'next/image'
 import { Inter } from '@next/font/google'
 import styles from '../styles/Home.module.css'
 import { ChangeEvent, useState } from 'react'
+import axios from 'axios'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
   const [email, setEmail] = useState("");
   const [numberOfEmails, setNumberOfEmails] = useState("");
+  const [submissionInProgress, setSubmissionInProgress] = useState(false);
+  const [emailsSentMessage, setEmailsSentMessage] = useState("");
 
-  const fireAwayEmails = () => {
-    
+  const fireAwayEmails = async (e: any) => {
+    setEmailsSentMessage("");
+    e.preventDefault();
+    setSubmissionInProgress(true);
+    const emails_response = await axios.post("/api/sendEmails", { to_email_address: email, no_of_emails: numberOfEmails });
+    console.log(emails_response);
+    setSubmissionInProgress(false);
+    setEmailsSentMessage("Emails Sent");
   }
 
   return (
@@ -47,16 +56,17 @@ export default function Home() {
           
           <div className='flex flex-col p-1'>
             <p className='text-gray-300 font-semibold text-lg'>Email Address:</p>
-            <input className='rounded-md h-10 w-96 bg-gray-600' value={email} onChange={(e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}></input>
+            <input className='rounded-md h-10 w-96 bg-gray-600 px-1' type={'email'} required={true} value={email} onChange={(e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}></input>
           </div>
           <div className='flex flex-col p-1'>
             <p className='text-gray-300 font-semibold text-lg'>No. of Emails</p>
-            <input className='rounded-md h-10 w-20 bg-gray-600' value={numberOfEmails} onChange={(e: ChangeEvent<HTMLInputElement>) => setNumberOfEmails(e.target.value)}></input>
+            <input className='rounded-md h-10 w-20 bg-gray-600 px-1' type={'number'} required={true} value={numberOfEmails} onChange={(e: ChangeEvent<HTMLInputElement>) => setNumberOfEmails(e.target.value)}></input>
           </div>
           
         </div>
+        <button type="submit" value="Shoot" className='bg-blue-800 w-64 h-10 rounded-lg mt-5 disabled:bg-blue-300' disabled={submissionInProgress}>Shoot</button>
+        <p className='text-blue-800 font-semibold mt-2'>{emailsSentMessage}</p>
         </form>
-        <input type="submit" value="Shoot" className='bg-blue-800 w-64 h-10 rounded-lg mt-5'></input>
       </main>
     </>
   )
